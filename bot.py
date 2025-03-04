@@ -32,7 +32,7 @@ def echo_all(message):
 
 def set_webhook():
     # URL du webhook = domaine Koyeb + chemin d'écoute
-    webhook_url = f"https://isticharabot-[ORG].koyeb.app{WEBHOOK_PATH}"
+    webhook_url = f"https://isticharabot-isticharachat.koyeb.app{WEBHOOK_PATH}"
     bot.remove_webhook()
     bot.set_webhook(url=webhook_url)
     print(f"Webhook configuré sur : {webhook_url}")
