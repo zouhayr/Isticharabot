@@ -13,7 +13,7 @@ WEBHOOK_URL = f"https://isticharabot-isticharachat.koyeb.app{WEBHOOK_PATH}"
 def home():
     return "Bot actif! ✅"
 
-@app.route(WEBHOOK_PATH, methods=["POST"])
+@app.route("/webhook", methods=["POST"])  # ✅ Assurez-vous que "methods" est bien écrit
 def receive_update():
     if request.headers.get("content-type") == "application/json":
         update = telebot.types.Update.de_json(request.get_json())
