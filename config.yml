@@ -1,0 +1,7 @@
+language: "ar"
+pipeline:
+- name: HFTransformersNLP
+  model_name: "aubmindlab/bert-base-arabert"
+  model_weights: "aubmindlab/bert-base-arabert"
+- name: Tokenizer
+- name: IntentClassifier
