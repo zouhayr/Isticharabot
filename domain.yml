@@ -1,0 +1,9 @@
+version: "3.1"
+intents:
+  - symptômes_peau
+  - demander_conseil
+responses:
+  utter_orienter_peau:
+    - text: "راقبي الحالة ديالك، إلا زادت شوفي طبيب ديال الجلد"
+  utter_orienter_conseil:
+    - text: "إلا كانت خفيفة، ارتاحي وشربي الماء، ولكن إلا زادت استشري طبيب"
