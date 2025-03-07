@@ -1,0 +1,10 @@
+version: "3.1"
+stories:
+- story: orienter_peau
+  steps:
+  - intent: symptômes_peau
+  - action: utter_orienter_peau
+- story: orienter_conseil
+  steps:
+  - intent: demander_conseil
+  - action: utter_orienter_conseil
