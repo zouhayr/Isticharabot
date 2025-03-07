@@ -6,4 +6,5 @@ RUN pip install --no-cache-dir torch==2.0.0+cpu -f https://download.pytorch.org/
 COPY . .
 ENV TELEGRAM_BOT_TOKEN=$TELEGRAM_BOT_TOKEN
 ENV TELEGRAM_BOT_NAME=$TELEGRAM_BOT_NAME
-CMD ["rasa", "run", "--enable-api", "--cors", "*", "--port", "5005", "--connector", "telegram", "--credentials", "credentials.yml"]
+RUN chmod +x entrypoint.sh
+CMD ["./entrypoint.sh"]
