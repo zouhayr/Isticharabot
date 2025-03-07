@@ -1,6 +1,4 @@
 name: Train Rasa Model
-
-run: rasa train --data nlu.yml stories.yml domain.yml
 on:
   push:
     branches:
