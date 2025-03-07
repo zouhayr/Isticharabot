@@ -1,34 +1,47 @@
 name: Train Rasa Model
+
+# Déclenche le workflow lors d'un push ou d'une pull request sur la branche main
 on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
+# Définit les jobs à exécuter
 jobs:
   train:
+    # Spécifie l'environnement où le job s'exécute (ici Ubuntu)
     runs-on: ubuntu-latest
 
+    # Étapes du job
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      # Étape 1 : Récupère le code du dépôt
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Setup Python
+      # Étape 2 : Configure Python (version compatible avec Rasa 3.6, ici 3.9)
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.9"
+          python-version: '3.9'
 
-      - name: Install Dependencies
+      # Étape 3 : Installe les dépendances depuis requirements.txt
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          rasa train
-      - name: Train the Rasa model
-        run: |
-          rasa train
 
-      - name: Upload Model Artifact
-        uses: actions/upload-artifact@v4
+      # Étape 4 : Entraîne le modèle Rasa
+      - name: Train Rasa model
+        run: |
+          rasa train --domain models/domain.yml
+
+      # Étape 5 (optionnelle) : Sauvegarde le modèle entraîné comme artefact
+      - name: Upload trained model
+        uses: actions/upload-artifact@v3
         with:
           name: rasa-model
-          path: models/
+          path: models/*.tar.gz  # Les modèles Rasa sont générés dans models/ par défaut
 
