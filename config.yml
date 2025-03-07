@@ -1,7 +1,14 @@
 language: "ar"
 pipeline:
-- name: HFTransformersNLP
-  model_name: "aubmindlab/bert-base-arabert"
-  model_weights: "aubmindlab/bert-base-arabert"
-- name: Tokenizer
-- name: IntentClassifier
+  - name: HFTransformersNLP
+    model_weights: "aubmindlab/bert-base-arabert"  # Modèle arabe pré-entraîné
+    model_name: "bert"  # Type de modèle (bert, roberta, etc.)
+  - name: LanguageModelTokenizer  # Tokenizer compatible avec HFTransformersNLP
+    intent_tokenization_flag: False
+  - name: DIETClassifier  # Classificateur d'intents
+    epochs: 100
+policies:
+  - name: MemoizationPolicy
+  - name: TEDPolicy
+    epochs: 100
+  - name: RulePolicy
