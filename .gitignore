@@ -1,3 +1,6 @@
 __pycache__
 *.pyc
 models/
+!models/domain.yml
+!models/nlu.yml
+!models/stories.yml
