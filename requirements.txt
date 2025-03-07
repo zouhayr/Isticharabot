@@ -1,2 +1,2 @@
 rasa[transformers]==3.6.0
-transformers==4.35.0
+transformers==4.26.0
