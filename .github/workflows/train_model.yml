@@ -34,7 +34,7 @@ jobs:
 
       # 5. Télécharger le modèle généré comme un artifact
       - name: Upload trained model
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: rasa-model
           path: models/*.tar.gz  # Remplace avec le chemin de ton modèle Rasa
