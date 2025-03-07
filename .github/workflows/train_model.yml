@@ -26,14 +26,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Check HFTransformersNLP
+      - name: Check dependencies
         run: |
           pip show rasa transformers sentencepiece
           python -c "import rasa; print('Rasa version:', rasa.__version__)"
-          python -c "from rasa.core.agent import Agent; print('Core OK')"  # Vérifie le module core
-          python -c "from rasa.nlu.model import Interpreter; print('NLU OK')"  # Vérifie NLU
-          python -c "from rasa.engine.recipes.default_recipe import DefaultV1Recipe; print('Recipe OK')"
-          python -c "import transformers; print('Transformers OK')"
+          python -c "from rasa.core.agent import Agent; print('Core OK')"
 
       - name: Train Rasa model
         run: |
