@@ -26,6 +26,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Check dependencies
+        run: |
+          pip show rasa transformers  # Vérifie les versions installées
+          python -c "from rasa.nlu.components import Component; print('Rasa NLU OK')"
+          python -c "import transformers; print('Transformers OK')"
+
       - name: Train Rasa model
         run: |
           rasa train --domain models/domain.yml --data models/nlu.yml models/stories.yml
