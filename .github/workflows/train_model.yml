@@ -40,13 +40,12 @@ jobs:
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          mkdir -p models  # Crée le dossier models/ s'il n'existe pas
+          mkdir -p models
           ls models/*.tar.gz || echo "Aucun fichier .tar.gz trouvé"
-          # Trouve le dernier fichier .tar.gz et le renomme
           if ls models/*.tar.gz >/dev/null 2>&1; then
             latest_model=$(ls -t models/*.tar.gz | head -n 1)
             mv "$latest_model" models/model.tar.gz
-            git add models/model.tar.gz
+            git add -f models/model.tar.gz  # Force l'ajout même si ignoré
             git commit -m "Ajout du modèle entraîné" || echo "No changes to commit"
             git push origin main
           else
