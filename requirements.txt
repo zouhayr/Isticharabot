@@ -1,3 +1,5 @@
 rasa==3.6.0
 # transformers==4.26.0  # Peut être supprimé si inutilisé ailleurs
 # sentencepiece==0.1.99  # Peut être supprimé si inutilisé ailleurs
+
+sqlalchemy<2.0
