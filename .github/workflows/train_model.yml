@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write  # Autorise l'écriture dans le dépôt
+
 jobs:
   train:
     runs-on: ubuntu-latest
@@ -45,7 +48,7 @@ jobs:
           if ls models/*.tar.gz >/dev/null 2>&1; then
             latest_model=$(ls -t models/*.tar.gz | head -n 1)
             mv "$latest_model" models/model.tar.gz
-            git add -f models/model.tar.gz  # Force l'ajout même si ignoré
+            git add -f models/model.tar.gz
             git commit -m "Ajout du modèle entraîné" || echo "No changes to commit"
             git push origin main
           else
