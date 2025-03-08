@@ -9,10 +9,10 @@ EOF
 echo "Credentials written to /app/credentials_temp.yml:"
 cat /app/credentials_temp.yml
 echo "Launching Rasa in background"
-rasa run --enable-api --cors "*" --port 5005 --connector telegram --credentials /app/credentials_temp.yml --model models/model.tar.gz &
+rasa run --enable-api --cors "*" --port 8080 --connector telegram --credentials /app/credentials_temp.yml --model models/model.tar.gz &
 RASA_PID=$!
 echo "Rasa PID: $RASA_PID"
-echo "Waiting for Rasa to be ready on port 5005..."
+echo "Waiting for Rasa to be ready on port 8080..."
 until curl -s -v http://localhost:5005/ > /dev/null 2>/app/curl_debug.log; do
   echo "Still waiting for Rasa..."
   echo "Current curl debug output:"
@@ -20,5 +20,5 @@ until curl -s -v http://localhost:5005/ > /dev/null 2>/app/curl_debug.log; do
   sleep 5
 done
 echo "Rasa is running now - Response from curl:"
-curl -s http://localhost:5005/
+curl -s http://localhost:8080/
 wait $RASA_PID
