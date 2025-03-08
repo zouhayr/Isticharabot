@@ -4,4 +4,3 @@ models/
 !models/domain.yml
 !models/nlu.yml
 !models/stories.yml
-!models/*.tar.gz
