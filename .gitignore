@@ -4,4 +4,4 @@ models/
 !models/domain.yml
 !models/nlu.yml
 !models/stories.yml
-!models/models/20250307-234011-indulgent-canister.tar.gz
+!models/*.tar.gz
