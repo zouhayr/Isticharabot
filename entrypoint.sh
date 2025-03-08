@@ -9,7 +9,7 @@ EOF
 echo "Credentials written to /app/credentials_temp.yml:"
 cat /app/credentials_temp.yml
 echo "Launching Rasa in background"
-rasa run --enable-api --cors "*" --port 8080 --host 0.0.0.0 --connector telegram --credentials /app/credentials_temp.yml --model models/model.tar.gz &
+rasa run --enable-api --cors "*" --port 8080 --connector telegram --credentials /app/credentials_temp.yml --model models/model.tar.gz &
 RASA_PID=$!
 echo "Rasa PID: $RASA_PID"
 echo "Waiting for Rasa to be ready on port 8080..."
