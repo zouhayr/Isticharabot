@@ -36,7 +36,6 @@ echo "Credentials written to $LOG_DIR/credentials_temp.yml:"
 cat $LOG_DIR/credentials_temp.yml
 
 # Lancer Rasa avec redirection des logs
-echo "Launching Rasa in background"
 rasa run --log-level DEBUG --enable-api --cors '*' --port 5005 --connector telegram --credentials $LOG_DIR/credentials_temp.yml --model /app/models/model.tar.gz > $LOG_DIR/rasa_output.log 2>&1 &
 RASA_PID=$!
 echo "Rasa PID: $RASA_PID"
