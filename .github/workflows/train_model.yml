@@ -37,8 +37,10 @@ jobs:
 
       - name: Train Rasa model
         run: |
-          rasa train --config config.yml --domain models/domain.yml --data models/nlu.yml models/stories.yml --out models/model.tar.gz
-          ls -lh models/model.tar.gz || echo "Modèle non généré"
+          rasa train --config config.yml --domain models/domain.yml --data models/nlu.yml models/stories.yml --out /tmp/model.tar.gz
+          ls -lh /tmp/model.tar.gz || echo "Modèle non généré"
+          mkdir -p models
+          mv /tmp/model.tar.gz models/model.tar.gz
 
       - name: Commit trained model
         run: |
