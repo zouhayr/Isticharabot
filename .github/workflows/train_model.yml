@@ -36,7 +36,7 @@ jobs:
           python -c "from rasa.core.agent import Agent; print('Core OK')"
 
       - name: Train Rasa model
-         run: |
+        run: |
            mkdir -p /tmp/rasa_model_output
            rasa train --config config.yml --domain models/domain.yml --data models/nlu.yml models/stories.yml --out /tmp/rasa_model_output
            ls -lh /tmp/rasa_model_output || echo "Aucun fichier généré dans /tmp/rasa_model_output"
