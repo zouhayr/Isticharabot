@@ -4,7 +4,7 @@ echo "Starting entrypoint.sh"
 LOG_DIR=/tmp/rasa_logs
 mkdir -p $LOG_DIR
 
-# Vérifier l'existence du modèle
+# Vérifier l'existence du modèle 
 echo "Vérification du chemin du modèle..."
 if [ -f "/app/models/model.tar.gz" ]; then
     echo "Fichier /app/models/model.tar.gz trouvé."
