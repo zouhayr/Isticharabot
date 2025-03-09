@@ -1,2 +1,5 @@
-model:
-  path: "models/your_model.tar.gz"
+# endpoints.yml
+# Laisser vide si aucun endpoint spécifique n'est nécessaire
+# Exemple si vous ajoutez un action server plus tard :
+# action_endpoint:
+#   url: "http://localhost:5055/webhook"
