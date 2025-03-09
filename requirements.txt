@@ -1,5 +1,5 @@
 rasa==3.6.20
 sqlalchemy<2.0
-tensorflow==2.8.0
+tensorflow==2.12.0  # Remplacez 2.8.0 par 2.12.0
 transformers
 sentencepiece
