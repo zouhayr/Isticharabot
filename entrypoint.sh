@@ -28,7 +28,7 @@ cat "$LOG_DIR/credentials_temp.yml"
 
 echo "Launching Rasa in background"
 
-# Démarrer Rasa avec logging
+# Démarrer Rasa avec logging et débogage
 rasa run \
   --enable-api \
   --cors "*" \
@@ -36,6 +36,7 @@ rasa run \
   --connector telegram \
   --credentials "$LOG_DIR/credentials_temp.yml" \
   --model models/model.tar.gz \
+  --log-level DEBUG \
   > "$LOG_DIR/rasa.log" 2>&1 &
 
 RASA_PID=$!
@@ -55,7 +56,7 @@ do
   if [ $RETRY_COUNT -ge $MAX_RETRIES ]; then
     echo "Timeout: Rasa n'a pas démarré après $((MAX_RETRIES * 5)) secondes"
     echo "Derniers logs Rasa :"
-    tail -n 100 "$LOG_DIR/rasa.log" 2>/dev/null || echo "Aucun log disponible"
+    cat "$LOG_DIR/rasa.log"  # Afficher tous les logs pour débogage
     exit 1
   fi
 
