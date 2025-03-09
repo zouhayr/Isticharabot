@@ -1,4 +1,4 @@
-rasa==3.6.20
+rasa==3.6.21
 sqlalchemy<2.0
 transformers
 sentencepiece
