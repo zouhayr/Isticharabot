@@ -36,11 +36,21 @@ jobs:
           python -c "from rasa.core.agent import Agent; print('Core OK')"
 
       - name: Train Rasa model
-        run: |
-          rasa train --config config.yml --domain models/domain.yml --data models/nlu.yml models/stories.yml --out /tmp/model.tar.gz
-          ls -lh /tmp/model.tar.gz || echo "Modèle non généré"
-          mkdir -p models
-          mv /tmp/model.tar.gz models/model.tar.gz
+         run: |
+           mkdir -p /tmp/rasa_model_output
+           rasa train --config config.yml --domain models/domain.yml --data models/nlu.yml models/stories.yml --out /tmp/rasa_model_output
+           ls -lh /tmp/rasa_model_output || echo "Aucun fichier généré dans /tmp/rasa_model_output"
+           # Trouver le fichier .tar.gz généré (il aura un nom comme 20250309-130158-excited-analogy.tar.gz)
+           MODEL_FILE=$(ls /tmp/rasa_model_output/*.tar.gz | head -n 1)
+              if [ -f "$MODEL_FILE" ]; then
+                echo "Fichier modèle trouvé : $MODEL_FILE"
+                  mkdir -p models
+                   mv "$MODEL_FILE" models/model.tar.gz
+              ls -lh models/model.tar.gz || echo "Erreur lors du déplacement du modèle"
+                else
+                  echo "Erreur : Aucun fichier .tar.gz trouvé dans /tmp/rasa_model_output"
+                   exit 1
+                       fi
 
       - name: Commit trained model
         run: |
