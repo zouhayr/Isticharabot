@@ -28,14 +28,14 @@ cat "$LOG_DIR/credentials_temp.yml"
 
 echo "Launching Rasa in background"
 
-# Démarrer Rasa avec logging et débogage sur le port 5005
+# Démarrer Rasa avec logging et débogage sur le port 5005 (supprimer l'espace final)
 rasa run \
   --enable-api \
   --cors "*" \
   --port 5005 \
   --connector telegram \
   --credentials "$LOG_DIR/credentials_temp.yml" \
-  --model /app/models/model.tar.gz \  # Chemin corrigé dans le conteneur
+  --model /app/models/model.tar.gz \
   --log-level DEBUG \
   > "$LOG_DIR/rasa.log" 2>&1 &
 
