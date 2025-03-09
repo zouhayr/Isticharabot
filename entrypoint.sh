@@ -28,11 +28,11 @@ cat "$LOG_DIR/credentials_temp.yml"
 
 echo "Launching Rasa in background"
 
-# Démarrer Rasa avec logging et débogage
+# Démarrer Rasa avec logging et débogage sur le port 5005
 rasa run \
   --enable-api \
   --cors "*" \
-  --port 8080 \
+  --port 5005 \  # Aligner avec le port par défaut de Rasa
   --connector telegram \
   --credentials "$LOG_DIR/credentials_temp.yml" \
   --model models/model.tar.gz \
@@ -42,7 +42,7 @@ rasa run \
 RASA_PID=$!
 echo "Rasa PID: $RASA_PID"
 
-echo "Waiting for Rasa to be ready on port 8080..."
+echo "Waiting for Rasa to be ready on port 5005..."
 
 # Délai initial pour laisser Rasa démarrer
 sleep 10
@@ -51,7 +51,7 @@ sleep 10
 MAX_RETRIES=36  # 36 x 5s = 180s
 RETRY_COUNT=0
 
-until curl -s -f http://localhost:8080/ > "$LOG_DIR/rasa_response.log" 2>"$LOG_DIR/curl_debug.log"
+until curl -s -f http://localhost:5005/ > "$LOG_DIR/rasa_response.log" 2>"$LOG_DIR/curl_debug.log"
 do
   if [ $RETRY_COUNT -ge $MAX_RETRIES ]; then
     echo "Timeout: Rasa n'a pas démarré après $((MAX_RETRIES * 5)) secondes"
@@ -73,6 +73,6 @@ do
 done
 
 echo "Rasa is running now - Response from curl:"
-curl -s http://localhost:8080/
+curl -s http://localhost:5005/
 
 wait $RASA_PID
