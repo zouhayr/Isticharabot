@@ -35,7 +35,7 @@ rasa run \
   --port 5005 \
   --connector telegram \
   --credentials "$LOG_DIR/credentials_temp.yml" \
-  --model /app/Isticharabot/models/model.tar.gz \  # Chemin corrigé dans le conteneur
+  --model /app/models/model.tar.gz \  # Chemin corrigé dans le conteneur
   --log-level DEBUG \
   > "$LOG_DIR/rasa.log" 2>&1 &
 
