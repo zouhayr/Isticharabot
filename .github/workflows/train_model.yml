@@ -37,22 +37,20 @@ jobs:
 
       - name: Train Rasa model
         run: |
-          rasa train --domain models/domain.yml --data models/nlu.yml models/stories.yml
+          rasa train --config config.yml --domain models/domain.yml --data models/nlu.yml models/stories.yml --out models/model.tar.gz
+          ls -lh models/model.tar.gz || echo "Modèle non généré"
 
       - name: Commit trained model
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          mkdir -p models
-          ls models/*.tar.gz || echo "Aucun fichier .tar.gz trouvé"
-          if ls models/*.tar.gz >/dev/null 2>&1; then
-            latest_model=$(ls -t models/*.tar.gz | head -n 1)
-            mv "$latest_model" models/model.tar.gz
+          if [ -f models/model.tar.gz ]; then
             git add -f models/model.tar.gz
             git commit -m "Ajout du modèle entraîné" || echo "No changes to commit"
             git push origin main
           else
-            echo "Aucun modèle à pousser"
+            echo "Erreur : model.tar.gz n'a pas été généré. Vérifiez les logs précédents."
+            exit 1
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -61,5 +59,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: rasa-model
-          path: models/*.tar.gz
-
+          path: models/model.tar.gz
