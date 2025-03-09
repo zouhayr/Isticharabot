@@ -32,10 +32,10 @@ echo "Launching Rasa in background"
 rasa run \
   --enable-api \
   --cors "*" \
-  --port 5005 \  # Aligner avec le port par défaut de Rasa
+  --port 5005 \
   --connector telegram \
   --credentials "$LOG_DIR/credentials_temp.yml" \
-  --model models/model.tar.gz \
+  --model /app/Isticharabot/models/model.tar.gz \  # Chemin corrigé dans le conteneur
   --log-level DEBUG \
   > "$LOG_DIR/rasa.log" 2>&1 &
 
@@ -56,14 +56,13 @@ do
   if [ $RETRY_COUNT -ge $MAX_RETRIES ]; then
     echo "Timeout: Rasa n'a pas démarré après $((MAX_RETRIES * 5)) secondes"
     echo "Derniers logs Rasa :"
-    cat "$LOG_DIR/rasa.log"  # Afficher tous les logs pour débogage
+    cat "$LOG_DIR/rasa.log"
     exit 1
   fi
 
   echo "Still waiting for Rasa... (attempt $((RETRY_COUNT+1)))"
   ((RETRY_COUNT++))
 
-  # Afficher les logs si disponibles
   if [ -f "$LOG_DIR/rasa.log" ]; then
     tail -n 20 "$LOG_DIR/rasa.log"
   else
