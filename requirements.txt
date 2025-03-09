@@ -1,5 +1,2 @@
-rasa==3.6.0
-# transformers==4.26.0  # Peut être supprimé si inutilisé ailleurs
-# sentencepiece==0.1.99  # Peut être supprimé si inutilisé ailleurs
-
+rasa==3.6.20  # Mise à jour pour inclure les correctifs de sécurité
 sqlalchemy<2.0
