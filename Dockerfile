@@ -10,8 +10,10 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt \
     -f https://download.pytorch.org/whl/torch_stable.html
 
+# Copier le dossier models depuis Isticharabot
+COPY Isticharabot/models/ ./models/
+
 # Copier les autres fichiers
-COPY models/ ./models/
 COPY credentials.yml ./
 COPY entrypoint.sh .
 
