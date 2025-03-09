@@ -5,16 +5,20 @@ RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Copier les fichiers
+# Copier les fichiers nécessaires directement depuis la racine du contexte
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt \
     -f https://download.pytorch.org/whl/torch_stable.html
 
-# Copier tout le dossier Isticharabot
-COPY Isticharabot/ ./Isticharabot/
+# Copier le dossier models et les autres fichiers
+COPY models/ ./models/
+COPY credentials.yml .
+COPY entrypoint.sh .
+COPY config.yml .
+COPY endpoints.yml .
 
 # Assurer les permissions du script
-RUN chmod +x Isticharabot/entrypoint.sh
+RUN chmod +x entrypoint.sh
 
 # Créer un répertoire temporaire avec permissions larges
 RUN mkdir -p /tmp/rasa_logs && chmod -R 777 /tmp/rasa_logs
@@ -30,4 +34,4 @@ RUN useradd -m botuser
 USER botuser
 
 # Lancer le bot
-CMD ["Isticharabot/entrypoint.sh"]
+CMD ["./entrypoint.sh"]
