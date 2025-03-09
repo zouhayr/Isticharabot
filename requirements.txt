@@ -1,5 +1,4 @@
 rasa==3.6.20
 sqlalchemy<2.0
-tensorflow==2.6.0  # Compatible avec Rasa 3.6.20
 transformers
 sentencepiece
