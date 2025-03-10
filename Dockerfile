@@ -29,10 +29,14 @@ ARG TELEGRAM_BOT_NAME
 ENV TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
 ENV TELEGRAM_BOT_NAME=${TELEGRAM_BOT_NAME}
 
+# Copier le fichier logging.yml
+COPY logging.yml .
+
 # Utiliser un utilisateur non-root
 RUN useradd -m botuser
 USER botuser
-COPY logging.yml 
+
 # Lancer le bot
 CMD ["./entrypoint.sh"]
+
 
