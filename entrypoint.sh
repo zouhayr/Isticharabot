@@ -4,7 +4,7 @@ echo "Starting entrypoint.sh"
 LOG_DIR=/tmp/rasa_logs
 mkdir -p $LOG_DIR
 
-# Vérifier l'existence du modèle 
+# Vérifier l'existence du modèle
 echo "Vérification du chemin du modèle..."
 if [ -f "/app/models/model.tar.gz" ]; then
     echo "Fichier /app/models/model.tar.gz trouvé."
@@ -13,6 +13,7 @@ if [ -f "/app/models/model.tar.gz" ]; then
         echo "Archive /app/models/model.tar.gz est valide."
     else
         echo "Erreur : /app/models/model.tar.gz est corrompu ou invalide."
+        exit 1
     fi
 else
     echo "Erreur : /app/models/model.tar.gz n'existe pas."
@@ -26,17 +27,18 @@ if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_BOT_NAME" ]; then
     echo "Erreur : Variables d'environnement TELEGRAM_BOT_TOKEN ou TELEGRAM_BOT_NAME manquantes"
     exit 1
 fi
-cat << EOF > $LOG_DIR/credentials_temp.yml
+cat << EOF > $LOG_DIR/credentials.yml
 telegram:
   access_token: "$TELEGRAM_BOT_TOKEN"
   verify: "$TELEGRAM_BOT_NAME"
   webhook_url: "https://isticharabot-isticharachat.koyeb.app/webhooks/telegram/webhook"
 EOF
-echo "Credentials written to $LOG_DIR/credentials_temp.yml:"
-cat $LOG_DIR/credentials_temp.yml
+echo "Credentials written to $LOG_DIR/credentials.yml:"
+cat $LOG_DIR/credentials.yml
 
 # Lancer Rasa avec redirection des logs
-rasa run --log-level DEBUG --enable-api --cors '*' --port 5005 --connector telegram --credentials $LOG_DIR/credentials_temp.yml --model /app/models/model.tar.gz > $LOG_DIR/rasa_output.log 2>&1 &
+# Suppression de --connector telegram et --log-level DEBUG
+rasa run --enable-api --cors '*' --port 5005 --credentials $LOG_DIR/credentials.yml --model /app/models/model.tar.gz > $LOG_DIR/rasa_output.log 2>&1 &
 RASA_PID=$!
 echo "Rasa PID: $RASA_PID"
 
@@ -61,3 +63,4 @@ fi
 
 echo "Rasa is running!"
 tail -f $LOG_DIR/rasa_output.log
+
