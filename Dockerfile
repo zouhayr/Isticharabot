@@ -35,3 +35,4 @@ USER botuser
 
 # Lancer le bot
 CMD ["./entrypoint.sh"]
+
