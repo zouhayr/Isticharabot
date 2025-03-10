@@ -27,6 +27,7 @@ if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_BOT_NAME" ]; then
     echo "Erreur : Variables d'environnement TELEGRAM_BOT_TOKEN ou TELEGRAM_BOT_NAME manquantes"
     exit 1
 fi
+# **Correction critique : Utiliser credentials.yml directement**
 cat << EOF > $LOG_DIR/credentials.yml
 telegram:
   access_token: "$TELEGRAM_BOT_TOKEN"
@@ -39,7 +40,8 @@ cat $LOG_DIR/credentials.yml
 # Lancer Rasa avec redirection des logs et fichier de configuration de logging
 # Suppression de --log-level DEBUG
 # Utilisation de --logging-config-file
-rasa run --enable-api --cors '*' --port 5005 --credentials $LOG_DIR/credentials.yml --model /app/models/model.tar.gz --logging-config-file logging.yml > $LOG_DIR/rasa_output.log 2>&1 &
+# **Correction critique : Utiliser credentials.yml directement**
+rasa run --enable-api --cors '*' --port 5005 --credentials $LOG_DIR/credentials.yml --model /app/models/model.tar.gz > $LOG_DIR/rasa_output.log 2>&1 &
 RASA_PID=$!
 echo "Rasa PID: $RASA_PID"
 
@@ -64,6 +66,7 @@ fi
 
 echo "Rasa is running!"
 tail -f $LOG_DIR/rasa_output.log
+
 
 
 
