@@ -9,7 +9,7 @@ on:
       - main
 
 permissions:
-  contents: write  # Autorise l'écriture dans le dépôt
+  contents: write
 
 jobs:
   train:
@@ -40,7 +40,6 @@ jobs:
            mkdir -p /tmp/rasa_model_output
            rasa train --config config.yml --domain models/domain.yml --data models/nlu.yml models/stories.yml --out /tmp/rasa_model_output
            ls -lh /tmp/rasa_model_output || echo "Aucun fichier généré dans /tmp/rasa_model_output"
-           # Trouver le fichier .tar.gz généré (il aura un nom comme 20250309-130158-excited-analogy.tar.gz)
            MODEL_FILE=$(ls /tmp/rasa_model_output/*.tar.gz | head -n 1)
               if [ -f "$MODEL_FILE" ]; then
                 echo "Fichier modèle trouvé : $MODEL_FILE"
@@ -72,3 +71,4 @@ jobs:
         with:
           name: rasa-model
           path: models/model.tar.gz
+
