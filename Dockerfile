@@ -32,7 +32,7 @@ ENV TELEGRAM_BOT_NAME=${TELEGRAM_BOT_NAME}
 # Utiliser un utilisateur non-root
 RUN useradd -m botuser
 USER botuser
-
+COPY logging.yml 
 # Lancer le bot
 CMD ["./entrypoint.sh"]
 
